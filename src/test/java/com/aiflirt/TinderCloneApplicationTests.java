@@ -1,4 +1,4 @@
-package com.tinderclone;
+package com.aiflirt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

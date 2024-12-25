@@ -1,4 +1,4 @@
-package com.tinderclone.profile;
+package com.aiflirt.profile;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

@@ -8,11 +8,11 @@
 		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.tinderclone</groupId>
+	<groupId>com.aiflirt</groupId>
 	<artifactId>AIFlirt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tinder-clone</name>
-	<description>tinder-clone</description>
+	<name>aiflirt</name>
+	<description>aiflirt</description>
 	<url/>
 	<licenses>
 		<license/>

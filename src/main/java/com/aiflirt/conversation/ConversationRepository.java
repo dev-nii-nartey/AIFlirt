@@ -1,8 +1,9 @@
-package com.tinderclone.profile;
+package com.aiflirt.conversation;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
-public interface ProfileRepository extends MongoRepository<Profile,String> {
+public interface ConversationRepository extends MongoRepository<Conversation, String> {
 }

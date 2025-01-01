@@ -18,18 +18,23 @@ public class ConversationServiceImpl implements ConversationService {
 
     private ConversationRepository conversationRepository;
     private ProfileRepository profileRepository;
-    private ProfileValidator validator;
+    private ProfileValidator profileValidator;
+    private ConvoValidator convoValidator;
 
     @Override
     public ConversationDto startConversation(ChatRequest chatRequest) {
-        validator.checkForProfile(chatRequest.profileId());
+        profileValidator.checkForProfile(chatRequest.profileId());
+        Conversation conversation = convoValidator.existingConvo(chatRequest.profileId());
+        if (conversation != null) {
+           return new ConversationDto(conversation);
+        }
 
-        Conversation conversation = new Conversation(
+        Conversation newConversation = new Conversation(
                 UUID.randomUUID(),
                 chatRequest.profileId(),
                new ArrayList<>()
         );
-        Conversation save = conversationRepository.save(conversation);
+        Conversation save = conversationRepository.save(newConversation);
         return new ConversationDto(save);
     }
 

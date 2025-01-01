@@ -30,7 +30,7 @@ public class ConversationServiceImpl implements ConversationService {
                new ArrayList<>()
         );
         Conversation save = conversationRepository.save(conversation);
-        return new ConversationDto(save.id(),save.profileId(),save.messages());
+        return new ConversationDto(save);
     }
 
 }

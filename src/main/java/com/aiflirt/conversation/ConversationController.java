@@ -3,10 +3,9 @@ package com.aiflirt.conversation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/conversation")
@@ -19,5 +18,11 @@ public class ConversationController {
     @PostMapping
     private ConversationDto CreateConversation(@RequestBody ChatRequest chatRequest){
         return conversationService.startConversation(chatRequest);
+    }
+
+
+    @PatchMapping("/{conversationId}")
+    private ConversationDto sendMessage(@RequestBody SendMessage message, @PathVariable UUID conversationId){
+        return conversationService.sendMessage(message, conversationId);
     }
 }

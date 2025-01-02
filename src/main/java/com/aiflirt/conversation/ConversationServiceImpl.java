@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -35,6 +37,16 @@ public class ConversationServiceImpl implements ConversationService {
                new ArrayList<>()
         );
         Conversation save = conversationRepository.save(newConversation);
+        return new ConversationDto(save);
+    }
+
+    @Override
+    public ConversationDto sendMessage(SendMessage message, UUID conversationId) {
+        profileValidator.checkForProfile(message.authorId());
+        Conversation conversation = convoValidator.checkForConvo(conversationId);
+        ChatMessage chatMessage = new ChatMessage(UUID.randomUUID(), message.textMessage(), LocalDateTime.now(), message.authorId());
+        conversation.messages().add(chatMessage);
+        Conversation save = conversationRepository.save(conversation);
         return new ConversationDto(save);
     }
 

@@ -16,13 +16,17 @@ public class ConversationController {
     private ConversationService conversationService;
 
     @PostMapping
-    private ConversationDto CreateConversation(@RequestBody ChatRequest chatRequest){
-        return conversationService.startConversation(chatRequest);
+    private ConversationDto CreateConversation(@RequestHeader UUID user, @RequestBody ChatRequest chatRequest){
+        return conversationService.startConversation(user, chatRequest);
     }
 
-
     @PatchMapping("/{conversationId}")
-    private ConversationDto sendMessage(@RequestBody SendMessage message, @PathVariable UUID conversationId){
-        return conversationService.sendMessage(message, conversationId);
+    private ConversationDto sendMessage(@RequestHeader UUID user, @RequestBody SendMessage message, @PathVariable UUID conversationId){
+        return conversationService.sendMessage(message,user, conversationId);
+    }
+
+    @GetMapping("/{conversationId}")
+    private ConversationDto getConversation(@RequestHeader UUID user, @PathVariable UUID conversationId){
+        return conversationService.getConversation(user,conversationId);
     }
 }

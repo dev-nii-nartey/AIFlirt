@@ -1,8 +1,9 @@
 package com.aiflirt.profile;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -11,8 +12,8 @@ import java.util.UUID;
 public class ProfileValidator {
     private final ProfileRepository profileRepository;
 
-    public void checkForProfile(UUID profileId) {
-       profileRepository.findById(profileId)
-                .orElseThrow(() -> new ResourceAccessException("Profile not found with id: " + profileId));
+    public Profile checkForProfile(UUID profileId) {
+      return profileRepository.findById(profileId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Conversation with id "+profileId +" not found"));
     }
 }

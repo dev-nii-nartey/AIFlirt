@@ -46,6 +46,7 @@ public class ConversationServiceImpl implements ConversationService {
     public ConversationDto sendMessage(SendMessage message, UUID conversationId) {
         profileValidator.checkForProfile(message.authorId());
         Conversation conversation = convoValidator.checkForConvo(conversationId);
+        convoValidator.sameAuthorProfile(message.profileId(),message.authorId(),conversation.id());
         ChatMessage chatMessage = new ChatMessage( message.textMessage(), LocalDateTime.now(), message.authorId());
         conversation.messages().add(chatMessage);
         Conversation save = conversationRepository.save(conversation);

@@ -26,6 +26,7 @@ public class ConversationServiceImpl implements ConversationService {
     @Override
     public ConversationDto startConversation(ChatRequest chatRequest) {
         profileValidator.checkForProfile(chatRequest.profileId());
+        profileValidator.checkForProfile(chatRequest.authorId());
         Conversation conversation = convoValidator.existingConvo(chatRequest.profileId());
         if (conversation != null) {
            return new ConversationDto(conversation);
@@ -33,7 +34,8 @@ public class ConversationServiceImpl implements ConversationService {
 
         Conversation newConversation = new Conversation(
                 UUID.randomUUID(),
-                chatRequest.profileId(),
+                chatRequest.authorId(),
+               chatRequest.profileId(),
                new ArrayList<>()
         );
         Conversation save = conversationRepository.save(newConversation);
@@ -44,7 +46,7 @@ public class ConversationServiceImpl implements ConversationService {
     public ConversationDto sendMessage(SendMessage message, UUID conversationId) {
         profileValidator.checkForProfile(message.authorId());
         Conversation conversation = convoValidator.checkForConvo(conversationId);
-        ChatMessage chatMessage = new ChatMessage(UUID.randomUUID(), message.textMessage(), LocalDateTime.now(), message.authorId());
+        ChatMessage chatMessage = new ChatMessage( message.textMessage(), LocalDateTime.now(), message.authorId());
         conversation.messages().add(chatMessage);
         Conversation save = conversationRepository.save(conversation);
         return new ConversationDto(save);

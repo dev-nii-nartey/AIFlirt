@@ -1,0 +1,33 @@
+
+  version: '3'
+  services:
+    app:
+      image: aiflirt:latest
+      ports:
+        - "3000:3000"
+      depends_on:
+        - mongodb
+        - ollama
+      environment:
+        - SPRING_DATA_MONGODB_URI=mongodb://admin:secret@mongodb:27017/aiflirt?authSource=admin
+
+    mongodb:
+      image: mongo:latest
+      ports:
+        - "27017:27017"
+      environment:
+        - MONGO_INITDB_ROOT_USERNAME=admin
+        - MONGO_INITDB_ROOT_PASSWORD=secret
+      volumes:
+        - mongodb_data:/data/db
+
+    ollama:
+      image: ollama/ollama:latest
+      ports:
+        - "11434:11434"
+      volumes:
+        - ollama_data:/root/.ollama
+
+  volumes:
+    mongodb_data:
+    ollama_data:
